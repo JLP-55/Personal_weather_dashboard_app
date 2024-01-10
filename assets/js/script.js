@@ -16,11 +16,16 @@ fetch(requestUrl)
         return response.json();
     })
     .then(function (data) {
-        console.log(parseInt(data[2]));
-        // for (var i = 0; i < data.length; i++) {
-        //     var liElement = document.createElement("li");
-        //     liElement.textContent = data;
-        // }
+        console.log(data.main);
+        var li = document.createElement("li");
+        li.textContent = data.main.temp;
+        console.log(li);
+        sectionAppend.appendChild(li);
+        for (var i = 0; i < data.length; i++) {
+            console.log("hello")
+            // var liElement = document.createElement("li");
+            // liElement.textContent = data;
+        }
         // console.log(liElement)
         // sectionAppend.appendChild(liElement);
     })
