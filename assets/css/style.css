@@ -1,0 +1,34 @@
+:root {
+    --header-colour: rgb(182, 109, 67);
+}
+
+* {
+    margin: 5px;
+}
+
+#search-bar {
+    color: var(--header-colour);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 250px;
+    width: auto;
+    padding: 5px;
+}
+
+#search-bar-header {
+    display: flex; 
+}
+
+#search-text-area {
+    height: auto;
+    width: 275px;
+}
+
+#search-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    width: 65px;
+}
+

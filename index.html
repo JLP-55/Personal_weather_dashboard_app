@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>City weather tracker</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <h1>Weather Dashboard</h1>
+
+    <section id="search-bar">
+        <h3 id="search-bar-header">Search for a city</h3>
+        <textarea id="search-text-area" placeholder="Enter the name of a city"></textarea>
+        <button id="search-button">search</button>
+    </section>
+
+    <section id="api-content">
+        <div>
+        </div>
+    </section>
+
+    <script src="assets/js/script.js"></script>
+    <script>
+        src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+        integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+        crossorigin="anonymous"
+    </script>
+</body>
+</html>
