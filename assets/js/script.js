@@ -1,11 +1,15 @@
 var apiKey = "972fb27dc4cbea1ce58d7935a921ca78";
 var city;
-// var theTime = dayjs().format("H");
+var theTime = dayjs().format("H");
 var userInput = document.querySelector("textarea");
 var searchButton = document.querySelector("#search-button");
 var sectionAppend = document.getElementById("section-content");
 var forecastAppend = document.getElementById("forecast-content");
 var asideAppend = document.getElementById("aside-content");
+var cityArray = [];
+// cityArray.push("hello");
+console.log(cityArray);
+
 
 // var weatherImgArray;
 
@@ -14,28 +18,68 @@ var asideAppend = document.getElementById("aside-content");
 // weatherFreezing.setAttribute("style", "position:relative; left:35px; top:60px;");
 // var weatherHot = document.createElement("img");
 // weatherHot.src = "./assets/images/hot.PNG";
-var weatherSunny = document.createElement("img");
-weatherSunny.src = "./assets/images/sunny.PNG";
-var weatherPartiallyCloudy = document.createElement("img");
-weatherPartiallyCloudy.src = "./assets/images/partially_cloudy.PNG";
-var weatherCloudy = document.createElement("img");
-weatherCloudy.src = "./assets/images/cloudy.PNG";
-var weatherScatteredShowers = document.createElement("img");
-weatherScatteredShowers.src = "./assets/images/scattered_showers.PNG";
-var weatherRain = document.createElement("img");
-weatherRain.src = "./assets/images/rain.PNG";
-var weatherThunderstorm = document.createElement("img");
-weatherThunderstorm.src = "./assets/images/thunderstorm.PNG";
-var weatherSnow = document.createElement("img");
-weatherSnow.src = "./assets/images/snow.PNG";
+// var weatherSunny = document.createElement("img");
+// weatherSunny.src = "./assets/images/sunny.PNG";
+// var weatherPartiallyCloudy = document.createElement("img");
+// weatherPartiallyCloudy.src = "./assets/images/partially_cloudy.PNG";
+// var weatherCloudy = document.createElement("img");
+// weatherCloudy.src = "./assets/images/cloudy.PNG";
+// var weatherScatteredShowers = document.createElement("img");
+// weatherScatteredShowers.src = "./assets/images/scattered_showers.PNG";
+// var weatherRain = document.createElement("img");
+// weatherRain.src = "./assets/images/rain.PNG";
+// var weatherThunderstorm = document.createElement("img");
+// weatherThunderstorm.src = "./assets/images/thunderstorm.PNG";
+// var weatherSnow = document.createElement("img");
+// weatherSnow.src = "./assets/images/snow.PNG";
+
+function displayHistory () {
+    for (let i = 0; i < cityArray.length; i++) {
+        var button = document.createElement("button");
+        button.setAttribute("id", "search-button");
+        button.textContent = cityArray[i];
+        sectionAppend.appendChild(button);
+        // const element = array[i];
+        // button.addEventListener("click", searchFunction());
+    }
+}
 
 function searchFunction() {
+    if (userInput.value === "") {
+        window.alert("please enter a city");
+        return;
+    }
     // Need to call toLowerCase only on a string.
     // city = JSON.stringify(userInput.value);
-    // userInput.toLowerCase;
-    city = userInput.value;
+    city = userInput.value.toLowerCase();
+    forecastAppend.innerHTML = "";
+    asideAppend.innerHTML = "";
+    
+    // city = userInput.value;
     var dailyWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric";
     var fiveDayWeather = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey + "&units=metric";
+
+    
+
+    var button = document.createElement("button");
+    button.setAttribute("id", "search-button");
+    button.textContent = city;
+    sectionAppend.appendChild(button);
+    cityArray.push(city);
+        
+    // array = array.concat(pElement.textContent).concat(pElement2.textContent).concat(pElement3.textContent);
+    localStorage.setItem("city", JSON.stringify(cityArray));
+
+    // localStorage.getItem("city");
+
+    // var button = document.createElement("button");
+    // button.setAttribute("id", "search-button");
+    // button.textContent = data.name;
+    // buttonDivElement.appendChild(button);
+
+    // sectionAppend.appendChild(buttonDivElement);
+
+
 
     // console.log(city);
     // console.log(dailyWeather);
@@ -69,18 +113,6 @@ function searchFunction() {
         divElement.appendChild(pElement2);
         divElement.appendChild(pElement3);
 
-        // array = [];
-        // array = array.concat(pElement.textContent).concat(pElement2.textContent).concat(pElement3.textContent);
-        // localStorage.setItem(city, array);
-
-        // localStorage.getItem(city);
-
-        var button = document.createElement("button");
-        button.setAttribute("id", "search-button");
-        button.textContent = data.name;
-        buttonDivElement.appendChild(button);
-
-        sectionAppend.appendChild(buttonDivElement);
         asideAppend.appendChild(divElement);
 
     })
@@ -108,6 +140,12 @@ function searchFunction() {
             var fiveDayForecastWindSpeed = document.createElement("p");
             fiveDayForecastWindSpeed.textContent = "Wind speed: " + data.list[i].wind.speed + " KPH";
             forecastAppendDiv.appendChild(fiveDayForecastWindSpeed);
+
+            var fiveDayForecastIcon = document.createElement("img");
+            var icon = data.list[i].weather[0].icon;
+            var IconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+            fiveDayForecastIcon.setAttribute("src",IconUrl)
+            forecastAppend.appendChild(fiveDayForecastIcon);
 
             forecastAppend.appendChild(forecastAppendDiv);
 
@@ -187,6 +225,17 @@ function searchFunction() {
 
 
 };
+
+function getFromLocalStorage () {
+    var localStorageArray = JSON.parse(localStorage.getItem("city"));
+    if (localStorageArray !== null) {
+        cityArray = cityArray.concat(localStorageArray);
+    };
+}
+
+getFromLocalStorage();
+
+displayHistory();
 
 // items = [1,2,3,4];
 
