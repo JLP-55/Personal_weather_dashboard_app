@@ -3,107 +3,66 @@ var city;
 var theTime = dayjs().format("H");
 var userInput = document.querySelector("textarea");
 var searchButton = document.querySelector("#search-button");
-var sectionAppend = document.getElementById("section-content");
+var renderCityBtn = document.getElementById("city-btn-section");
 var forecastAppend = document.getElementById("forecast-content");
-var asideAppend = document.getElementById("aside-content");
 var cityArray = [];
-// cityArray.push("hello");
-console.log(cityArray);
 
-
-// var weatherImgArray;
-
-// var weatherFreezing = document.createElement("img");
-// weatherFreezing.src = "./assets/images/freezing.PNG";
-// weatherFreezing.setAttribute("style", "position:relative; left:35px; top:60px;");
-// var weatherHot = document.createElement("img");
-// weatherHot.src = "./assets/images/hot.PNG";
-// var weatherSunny = document.createElement("img");
-// weatherSunny.src = "./assets/images/sunny.PNG";
-// var weatherPartiallyCloudy = document.createElement("img");
-// weatherPartiallyCloudy.src = "./assets/images/partially_cloudy.PNG";
-// var weatherCloudy = document.createElement("img");
-// weatherCloudy.src = "./assets/images/cloudy.PNG";
-// var weatherScatteredShowers = document.createElement("img");
-// weatherScatteredShowers.src = "./assets/images/scattered_showers.PNG";
-// var weatherRain = document.createElement("img");
-// weatherRain.src = "./assets/images/rain.PNG";
-// var weatherThunderstorm = document.createElement("img");
-// weatherThunderstorm.src = "./assets/images/thunderstorm.PNG";
-// var weatherSnow = document.createElement("img");
-// weatherSnow.src = "./assets/images/snow.PNG";
-
+// Display local storage items to the page.
 function displayHistory () {
-    for (let i = 0; i < cityArray.length; i++) {
+    for (var i = 0; i < cityArray.length; i++) {
         var button = document.createElement("button");
-        button.setAttribute("id", "search-button");
+        button.setAttribute("class", "city-btn-items");
         button.textContent = cityArray[i];
-        sectionAppend.appendChild(button);
-        // const element = array[i];
-        // button.addEventListener("click", searchFunction());
-    }
-}
+        renderCityBtn.appendChild(button);
+        button.addEventListener("click", renderClickedCity);
+    };
+};
 
-function searchFunction() {
+function renderClickedCity () {
+    var one = JSON.parse(localStorage.getItem("city"));
+    console.log("one");
+};
+
+// This function is called after hitting "search" on the page.
+function searchFunction(event) {
+    // Checks to see if the textarea is empty or not.
     if (userInput.value === "") {
         window.alert("please enter a city");
         return;
-    }
-    // Need to call toLowerCase only on a string.
-    // city = JSON.stringify(userInput.value);
+    };
+
+    // Sets the user input to lower case.
     city = userInput.value.toLowerCase();
+
+    // Resets the value of the forecastAppend variable so that the previously rendered items clear from the page.
     forecastAppend.innerHTML = "";
-    asideAppend.innerHTML = "";
     
-    // city = userInput.value;
+    // Api key variables for calling the current day and five day weather respectively.
     var dailyWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric";
     var fiveDayWeather = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey + "&units=metric";
 
-    
-
+    // Code responsible for the generation of each city button
     var button = document.createElement("button");
-    button.setAttribute("id", "search-button");
+    button.setAttribute("class", "city-btn-items");
     button.textContent = city;
-    sectionAppend.appendChild(button);
+    renderCityBtn.appendChild(button);
     cityArray.push(city);
         
-    // array = array.concat(pElement.textContent).concat(pElement2.textContent).concat(pElement3.textContent);
     localStorage.setItem("city", JSON.stringify(cityArray));
-
-    // localStorage.getItem("city");
-
-    // var button = document.createElement("button");
-    // button.setAttribute("id", "search-button");
-    // button.textContent = data.name;
-    // buttonDivElement.appendChild(button);
-
-    // sectionAppend.appendChild(buttonDivElement);
-
-
-
-    // console.log(city);
-    // console.log(dailyWeather);
 
     fetch(dailyWeather)
     .then(function (response) {
         return response.json();
     })
     .then(function (data) {
-        // asideAppend.setAttribute("style", "display: none;");
-        // console.log(data.weather[0]);
 
-        // var sectionAppend = document.createElement("section");
-        // sectionAppend.setAttribute("id", "section-content");
-
+        // Generates content for todays weather.
         var divElement = document.createElement("div");
-        var buttonDivElement = document.createElement("div");
         
         var pElement = document.createElement("p");
         var pElement2 = document.createElement("p");
         var pElement3 = document.createElement("p");
-        // pElement.setAttribute("style", "border: solid var(--main-colour);")
-        // pElement2.setAttribute("style", "border: solid var(--main-colour);")
-        // pElement3.setAttribute("style", "border: solid var(--main-colour);")
+    
         pElement.textContent = "Current temperature: " + data.main.temp + "°C";
         pElement2.textContent = "Humidity: " + data.main.humidity + "%";
         pElement3.textContent = "Windspeed: " + data.wind.speed + " KPH";
@@ -113,21 +72,30 @@ function searchFunction() {
         divElement.appendChild(pElement2);
         divElement.appendChild(pElement3);
 
-        asideAppend.appendChild(divElement);
+        forecastAppend.appendChild(divElement);
 
-    })
+        // Generates an image for the current weather
+        var fiveDayForecastIcon = document.createElement("img");
+        var icon = data.weather[0].icon;
+        console.log(icon);
+        var IconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+        fiveDayForecastIcon.setAttribute("src", IconUrl)
+        divElement.appendChild(fiveDayForecastIcon);
+
+    });
 
     fetch(fiveDayWeather)
     .then(function (response) {
         return response.json();
     })
     .then(function (data) {
-        // console.log(data.list[2]);
         for (var i = 0; i < 5; i++) {
             // console.log(data.list[i]);
 
+            // Generates content for the five day weather forecast.
             var forecastAppendDiv = document.createElement("div");
-            forecastAppendDiv.setAttribute("style", "display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start; height:195px; width:350px; border:solid var(--main-colour); position:relative; left: 235px;")
+            // forecastAppendDiv.setAttribute("style", "display:flex; flex-direction:column; align-items:center; justify-content:flex-start; height:195px; width:250px; border:solid var(--main-colour); position:relative; left: 235px;")
+            forecastAppendDiv.setAttribute("class", "forecast-content");
 
             var fiveDayForecastTemp = document.createElement("p");
             fiveDayForecastTemp.textContent = "Current temperature: " + data.list[i].main.temp + "°C";
@@ -141,23 +109,24 @@ function searchFunction() {
             fiveDayForecastWindSpeed.textContent = "Wind speed: " + data.list[i].wind.speed + " KPH";
             forecastAppendDiv.appendChild(fiveDayForecastWindSpeed);
 
+            // Generates images for the five day weather forecast.
             var fiveDayForecastIcon = document.createElement("img");
             var icon = data.list[i].weather[0].icon;
             var IconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
-            fiveDayForecastIcon.setAttribute("src",IconUrl)
-            forecastAppend.appendChild(fiveDayForecastIcon);
+            fiveDayForecastIcon.setAttribute("src", IconUrl)
+            forecastAppendDiv.appendChild(fiveDayForecastIcon);
 
             forecastAppend.appendChild(forecastAppendDiv);
 
         };
         
-        var appendDays = [
-            document.body.children[3].children[0].children[0],
-            document.body.children[3].children[1].children[0],
-            document.body.children[3].children[2].children[0],
-            document.body.children[3].children[3].children[0],
-            document.body.children[3].children[4].children[0],
-        ];
+        // var appendDays = [
+        //     document.body.children[3].children[0].children[0],
+        //     document.body.children[3].children[1].children[0],
+        //     document.body.children[3].children[2].children[0],
+        //     document.body.children[3].children[3].children[0],
+        //     document.body.children[3].children[4].children[0],
+        // ];
         // console.log(appendDays);
 
         // for (var i = 0; i < appendDays.length; i++) {
@@ -168,17 +137,17 @@ function searchFunction() {
         //     appendDays[i].appendChild(weatherFreezing);
         // };
 
-        for (var i = 0; i < 5; i++) {
-            if (data.list[i].main.temp > 23) {
-                for (var i = 0; i < appendDays.length; i++) {
-                    console.log(data.list[i].main.temp);
-                    var weatherHot = document.createElement("img");
-                    weatherHot.src = "./assets/images/hot.PNG";
-                    weatherHot.setAttribute("style", "position:relative; left:40px; top:60px;");
-                    appendDays[i].appendChild(weatherHot);
-                };
-            };
-        };
+        // for (var i = 0; i < 5; i++) {
+        //     if (data.list[i].main.temp > 23) {
+        //         for (var i = 0; i < appendDays.length; i++) {
+        //             console.log(data.list[i].main.temp);
+        //             var weatherHot = document.createElement("img");
+        //             weatherHot.src = "./assets/images/hot.PNG";
+        //             weatherHot.setAttribute("style", "position:relative; left:40px; top:60px;");
+        //             appendDays[i].appendChild(weatherHot);
+        //         };
+        //     };
+        // };
 
         // var appendDays = [{
             // day1Append: (document.body.children[3].children[0].children[0]),
@@ -219,11 +188,6 @@ function searchFunction() {
         
     });
 
-    // console.log(dailyWeather);
-    // console.log(liElement);
-
-
-
 };
 
 function getFromLocalStorage () {
@@ -236,11 +200,5 @@ function getFromLocalStorage () {
 getFromLocalStorage();
 
 displayHistory();
-
-// items = [1,2,3,4];
-
-// items.forEach((items,i) => {
-//     console.log(items, i);
-// });
 
 searchButton.addEventListener("click", searchFunction);

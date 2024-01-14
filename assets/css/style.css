@@ -35,33 +35,44 @@
     background-color: var(--main-colour);
 }
 
-#section-content {
-    /* background-color: var(--main-colour); */
-    /* display: flex; */
-    /* flex-direction: row; */
-    /* justify-content: space-between; */
-    height: auto;
-    width: 750px;
-    margin: 5px;
+#city-btn-section {
+    position: relative;
+    bottom: 100px;
+    padding: 5px;
+}
+
+.city-btn-items {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    width: 280px;
+    background-color: var(--main-colour);
 }
 
 #forecast-content {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    flex-direction: row;
     align-items: center;
+    position: relative;
+    left: 35%;
+    bottom: 290px;
     height: auto;
     width: 750px;
 }
 
-#aside-content {
-    position: absolute;
-    top: 165px;
-    left: 480px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    /* border: solid var(--main-colour); */
-    margin-top: -75px;
-    height: 400px;
-    width: 250px;
+@media screen and (max-width: 1200px) {
+    #forecast-content {
+        flex-wrap: wrap;
+        flex-direction: column;
+        left: 10%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #forecast-content {
+        flex-direction: column;
+        left: -230px;
+        bottom: 90%;
+    }
 }
