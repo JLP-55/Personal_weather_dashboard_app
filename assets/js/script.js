@@ -14,8 +14,6 @@ refreshBtn.setAttribute("id", "search-button");
 document.querySelector("section").appendChild(refreshBtn);
 refreshBtn.addEventListener("click", refreshPage);
 
-console.log(theDate)
-
 // A loop to create buttons for each city from local storage.
 function displayHistory () {
     for (var i = 0; i < cityArray.length; i++) {
@@ -29,6 +27,7 @@ function displayHistory () {
 
 // This function is called after hitting "search" on the page.
 function searchFunction(event) {
+
     // Checks to see if a city button on the page has been clicked and adds the textcontent of that button to user input.
     for (var i = 0; i < cityArray.length; i++) {
         if (event.target.textContent == cityArray[i]) {
@@ -56,9 +55,11 @@ function searchFunction(event) {
     // Code responsible for the generation of each city button, so long as it doesn't already exist.
     // Can't get it to work.
     // for (var i = 0; i < cityArray.length; i++) {
-    //     if ( userInput.value !== cityArray[i]) {
+    //     if (cityArray[i] === event.target.textContent) {
     //         console.log("hello");
-    //     };
+    //     } else {
+
+    //     }
     // };
 
     var button = document.createElement("button");
@@ -106,9 +107,8 @@ function searchFunction(event) {
         // Generates an image for the current weather
         var fiveDayForecastIcon = document.createElement("img");
         var icon = data.weather[0].icon;
-        console.log(icon);
         var IconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
-        fiveDayForecastIcon.setAttribute("src", IconUrl)
+        fiveDayForecastIcon.setAttribute("src", IconUrl);
         divElement.appendChild(fiveDayForecastIcon);
 
     });
