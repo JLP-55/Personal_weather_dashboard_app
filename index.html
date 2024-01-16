@@ -16,10 +16,9 @@
         <button id="search-button">search</button>
     </section>
     
-    <section id="forecast-content"></section>
-
     <section id="city-btn-section"></section>
-
+    
+    <section id="forecast-content"></section>
 
     <script
     src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
@@ -30,11 +29,14 @@
 </body>
 </html>
 
-<!-- to do items 
-- make the city button clickable 
-    - it should remove the current values from the forecastAppendDiv and replace with the relevant values of the city button that was last clicked
-- add picture to each day to summarise the overall weather
-- use dayjs() to add the date to each day 
-- improve CSS styling for the page 
-- set up button listiner for the search bar
-- can I rewatch the tutoring session anywhere? -->
+<!-- to do items -->
+
+<!-- 
+    - make the city buttons clickable/push the values to the userInput variable (function "renderClickedCity")
+    - fix the css relating to the loading of the weather forecast elements (they continue to travel down the page the more buttons you load)
+    - get the correct date for the weather forecast elements
+    - target the correct weather forecast index in the fetch query
+    - set up keyboard listiner for the textbox area
+    - figure out how to add an event listener to a newly generated city button without refreshing the page
+    - how do you increment by more than one? (line 105)
+ -->
