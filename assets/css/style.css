@@ -1,10 +1,23 @@
 :root {
     --main-colour: rgb(182, 109, 67);
+    --colour-text: #fff;
+    --colour-dark-blue: #13293d;
+    --colour-light-green: rgb(158, 255, 214);
+    --border-focus: #772014;
+    --header-background: rgb(216, 162, 14);
+    --body-background: #33393f;
+     /*--body-background: #3e5472;*/
+    --active: red;
 }
 
 * {
+    color: var(--colour-text);
     margin: 5px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--body-background);    
 }
 
 #search-bar {
@@ -22,6 +35,7 @@
 }
 
 #search-text-area {
+    background-color: var(--body-background);
     height: auto;
     width: 275px;
     font-size: large;
@@ -36,8 +50,9 @@
 }
 
 #city-btn-section {
-    position: relative;
-    bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    width: 290px;
     padding: 5px;
 }
 
@@ -56,23 +71,36 @@
     align-items: center;
     position: relative;
     left: 35%;
-    bottom: 290px;
+    bottom: 17.5rem;
     height: auto;
     width: 750px;
 }
 
-@media screen and (max-width: 1200px) {
+.forecast-content-item {
+    box-shadow: 0 0 100px var(--border-focus) inset;
+    background-color: var(--header-background);
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 1500px) {
     #forecast-content {
-        flex-wrap: wrap;
-        flex-direction: column;
-        left: 10%;
+        width: 750px;
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1150px) {
+    #forecast-content {
+        flex-wrap: wrap;
+        flex-direction: column;
+        left: 360px;
+        width: 250px;
+    }
+}
+
+@media screen and (max-width: 700px) {
     #forecast-content {
         flex-direction: column;
-        left: -230px;
-        bottom: 90%;
+        left: 25px;
+        bottom: -50px;
     }
 }
