@@ -41,6 +41,16 @@ function searchFunction(event) {
         return;
     };
 
+    //Generates the name of the city upon user search.
+    var cityName = document.createElement("h3");
+    cityName.textContent = userInput.value;
+    cityName.setAttribute("style", "display:flex; flex-direction:row; position:relative; bottom:40px; left:150px;")
+    cityName.setAttribute("id", "city-name");
+    cityName.setAttribute("class", "city-name-styling");
+    var cityNameId = document.getElementById("city-name-append");
+    cityNameId.innerHTML = "";
+    document.getElementById("city-name-append").appendChild(cityName);
+
     // Sets the user input to lower case.
     city = userInput.value.toLowerCase();
     console.log(city);

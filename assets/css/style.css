@@ -76,6 +76,14 @@ body {
     width: 750px;
 }
 
+/* .city-name-styling {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    bottom: 40px;
+    left: 150px;
+} */
+
 .forecast-content-item {
     box-shadow: 0 0 100px var(--border-focus) inset;
     background-color: var(--header-background);
@@ -102,5 +110,11 @@ body {
         flex-direction: column;
         left: 25px;
         bottom: -50px;
+    }
+}
+
+@media screen and (max-width: 213px) {
+    #city-name-styling {
+        left: 40px;
     }
 }
